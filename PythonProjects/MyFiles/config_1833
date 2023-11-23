@@ -1,0 +1,309 @@
+system
+ system-ip             1.1.1.1
+ domain-id             1
+ overlay-id            1
+ site-id               1
+ port-offset           0
+ control-session-pps   300
+ admin-tech-on-failure
+ sp-organization-name  "IOTG SYSTEM SDWAN TEST"
+ organization-name     "IOTG SYSTEM SDWAN TEST"
+ port-hop
+ track-transport
+ track-default-gateway
+ upgrade-confirm       15
+ console-baud-rate     9600
+ no on-demand enable
+ on-demand idle-timeout 10
+ vbond 10.1.1.50 port 12346
+!
+memory free low-watermark processor 42547
+call-home
+ contact-email-addr sch-smart-licensing@cisco.com
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+service tcp-keepalives-in
+service tcp-keepalives-out
+no service tcp-small-servers
+no service udp-small-servers
+platform qfp utilization monitor load 80
+hostname IR1833-1
+username admin privilege 15 secret 5 $1$2ZJB$X3R2R4I0NAArJbvtDoDvD.
+username webui privilege 15 one-time password 6 dVXRIYHTbRVKQhPBQOdaUYiEaYAcgHeaeP^d[M_I[LAA[gWZCgGdTdNaPLYLTJCc^Z
+controller Cellular 0/4/0
+!
+vrf definition 65500
+ address-family ipv4
+  exit-address-family
+ !
+!
+ip arp proxy disable
+no ip finger
+no ip rcmd rcp-enable
+no ip rcmd rsh-enable
+ip cef load-sharing algorithm include-ports source destination
+no ip domain lookup
+ip dhcp pool PnPWebUI1
+ vrf               65500
+ dns-server 192.168.0.1
+ host 192.168.1.3 255.255.255.0
+ client-identifier 7765.6275.69
+exit
+no ip dhcp use class
+ip pim ssm default
+ip bootp server
+no ip source-route
+ip http authentication local
+ip http server
+ip http secure-server
+ip multicast-routing distributed
+ip nat settings central-policy
+ip nat settings gatekeeper-size 1024
+ipv6 unicast-routing
+ipv6 cef load-sharing algorithm include-ports source destination
+ipv6 router ospf 2
+!
+ipv6 multicast-routing
+ipv6 rip vrf-mode enable
+vlan internal allocation policy ascending
+interface GigabitEthernet0/0/0
+ description connected to Switch GigabitEthernet1/0/1
+ no shutdown
+ ip address 15.1.1.1 255.255.255.0
+ ipv6 dhcp client request vendor
+ ipv6 address dhcp
+ ipv6 address autoconfig
+ ipv6 enable
+ negotiation auto
+exit
+interface GigabitEthernet0/1/0
+ switchport access vlan 10
+ switchport mode trunk
+ switchport trunk allowed vlan 10
+ no shutdown
+ load-interval 30
+exit
+interface GigabitEthernet0/1/1
+ description   connected to Ixia Port 2/7
+ switchport access vlan 100
+ switchport mode trunk
+ switchport trunk allowed vlan 100
+ no shutdown
+ load-interval 30
+exit
+interface GigabitEthernet0/1/2
+ description connected to Ixia Port 2/8
+ switchport access vlan 101
+ switchport mode trunk
+ switchport trunk allowed vlan 101
+ no shutdown
+exit
+interface GigabitEthernet0/1/3
+ description connected to Video Server ->>172.27.127.104
+ switchport access vlan 11
+ switchport mode access
+ no shutdown
+ spanning-tree portfast
+exit
+interface Loopback0
+ no shutdown
+ ip address 1.1.1.1 255.255.255.255
+ ipv6 address 2002:100:100:100::1/128
+ ipv6 ospf 2 area 0
+exit
+interface Cellular0/4/0
+ no shutdown
+ ip address negotiated
+ ipv6 enable
+exit
+interface Cellular0/4/1
+ shutdown
+exit
+interface Vlan1
+ no shutdown
+ vrf forwarding 65500
+ ip address 192.168.1.2 255.255.255.0
+exit
+interface Vlan10
+ no shutdown
+ ip address 10.10.1.1 255.255.255.0
+ ip pim sparse-mode
+ ipv6 address 2000:1:1:1::1/64
+ ipv6 ospf 2 area 0
+exit
+interface Vlan11
+ no shutdown
+ ip address 191.1.1.1 255.255.255.0
+exit
+interface Vlan100
+ no shutdown
+ ip address 192.1.0.1 255.255.0.0
+ ip pim sparse-mode
+ ip igmp version 3
+ ipv6 address 2010:1:1:1::1/64
+ ipv6 ospf 2 area 0
+exit
+interface Vlan101
+ no shutdown
+ ip address 192.2.0.1 255.255.0.0
+ ip pim sparse-mode
+ ipv6 address 2010:2:2:2::1/64
+ ipv6 ospf 2 area 0
+exit
+interface Async0/2/0
+ no shutdown
+ encapsulation scada
+exit
+interface Async0/2/1
+ no shutdown
+ encapsulation scada
+exit
+interface Tunnel0
+ no shutdown
+ ip unnumbered GigabitEthernet0/0/0
+ no ip redirects
+ ipv6 unnumbered GigabitEthernet0/0/0
+ no ipv6 redirects
+ tunnel source GigabitEthernet0/0/0
+ tunnel mode sdwan
+exit
+interface Wlan-GigabitEthernet0/1/4
+ no shutdown
+exit
+control-plane
+!
+clock timezone UTC 0 0
+logging discriminator nosel facility drops SELINUX
+logging persistent size 104857600 filesize 10485760
+logging buffered 512000
+no logging console
+aaa authentication enable default enable
+aaa authentication login default local
+aaa authorization console
+aaa authorization exec default local
+aaa server radius dynamic-author
+!
+login delay 3
+login on-success log
+login block-for 60 attempts 3 within 30
+router bgp 1
+ bgp log-neighbor-changes
+ neighbor 1.1.1.2 remote-as 1
+ neighbor 1.1.1.2 update-source Loopback0
+ neighbor 10.10.1.2 remote-as 100
+ neighbor 2000:1:1:1::2 remote-as 100
+ neighbor 2002:100:100:100::2 remote-as 1
+ neighbor 2002:100:100:100::2 update-source Loopback0
+ address-family ipv4 unicast
+  neighbor 1.1.1.2 activate
+  neighbor 10.10.1.2 activate
+  exit-address-family
+ !
+ address-family ipv6 unicast
+  neighbor 2000:1:1:1::2 activate
+  neighbor 2002:100:100:100::2 activate
+  exit-address-family
+ !
+!
+router ospf 1
+ no local-rib-criteria
+ network 1.1.1.1 0.0.0.0 area 0
+ network 10.10.1.0 0.0.0.255 area 0
+ network 191.1.1.0 0.0.0.255 area 0
+ network 192.1.0.0 0.0.255.255 area 0
+ network 192.2.0.0 0.0.255.255 area 0
+ exit
+!
+router ospf 100
+ no local-rib-criteria
+ network 15.1.1.1 0.0.0.0 area 0
+ exit
+!
+snmp-server ifindex persist
+line con 0
+ speed    9600
+ stopbits 1
+!
+line vty 0 4
+ transport input ssh
+!
+line vty 5 80
+ transport input ssh
+!
+line 0/2/1
+!
+line 0/0/0 0/0/1
+!
+line 0/2/0 0/2/1
+!
+ignition off-timer 300
+ignition undervoltage threshold 9 000
+no ignition sense
+no ignition enable
+ignition battery-type 12v
+ignition sense-voltage threshold 13 000
+lldp run
+nat64 translation timeout tcp 3600
+nat64 translation timeout udp 300
+sdwan
+ interface GigabitEthernet0/0/0
+  tunnel-interface
+   encapsulation ipsec
+   allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+   no allow-service snmp
+   no allow-service bfd
+  exit
+ exit
+ appqoe
+  no tcpopt enable
+  no dreopt enable
+  no httpopt enable
+ !
+ ip load-sharing algorithm ip-and-ports
+ ipv6 load-sharing algorithm ip-and-ports
+ omp
+  no shutdown
+  send-path-limit  4
+  ecmp-limit       4
+  graceful-restart
+  no as-dot-notation
+  timers
+   holdtime               60
+   advertisement-interval 1
+   graceful-restart-timer 43200
+   eor-timer              300
+  exit
+  address-family ipv4
+   advertise connected
+   advertise static
+  !
+  address-family ipv6
+   advertise connected
+   advertise static
+  !
+ !
+!
+bfd default-dscp 48
+bfd app-route multiplier 6
+bfd app-route poll-interval 600000
+security
+ ipsec
+  integrity-type ip-udp-esp esp
+ !
+!

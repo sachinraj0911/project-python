@@ -1,0 +1,34 @@
+1559211223738	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\sackuma3\\AppData\\Local\\Temp\\rust_mozprofile.GzKq8FFCoZb9"
+1559211232875	Marionette	INFO	Listening on port 63350
+1559211233043	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.cisco.com/web/fw/oneid/access/idp-discovery/1.2/public/js/login-federation-discovery.js, line 7828: ReferenceError: Modernizr is not defined
+Marionette threw an error: [Exception... "Failure"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "JS frame :: chrome://marionette/content/driver.js :: GeckoDriver.prototype.maximizeWindow/windowSizeChange/< :: line 3029"  data: no]
+GeckoDriver.prototype.maximizeWindow/windowSizeChange/<@chrome://marionette/content/driver.js:3029:9
+evalFn@chrome://marionette/content/sync.js:97:7
+
+[Child 4824, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child *** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1559211882823	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\sackuma3\\AppData\\Local\\Temp\\rust_mozprofile.SjGKRbO6KoVP"
+1559212181745	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\sackuma3\\AppData\\Local\\Temp\\rust_mozprofile.ujCkvyDwe66G"
+1559212183681	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1559212183682	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1559212183682	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1559212189680	Marionette	INFO	Listening on port 63596
+1559212189965	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.cisco.com/web/fw/oneid/access/idp-discovery/1.2/public/js/login-federation-discovery.js, line 7828: ReferenceError: Modernizr is not defined
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221559174406944%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:203:13
+
+[Child 8872, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1558039115/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Chi1559212234750	Marionette	INFO	Stopped listening on port 63596
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
