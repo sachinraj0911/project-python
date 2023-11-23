@@ -1,0 +1,7 @@
+Exercise: Filter logs (return only ERROR level log entries) from a log file (test.log), with the following structure
+20220803-10:06:01.739 ERROR [MainThread] Error on initial configuration of action Analyze.auth-heatmap
+20220803-15:16:00.003 INFO  [scheduled-job-executor-1] Current stats in scheduled queue: queue is empty.
+20220803-15:16:00.003 INFO  [scheduled-job-executor-1] Running check for scheduled jobs
+20220803-15:16:00.003 INFO  [scheduled-job-executor-2] Running check for scheduled jobs
+20220803-15:16:00.003 INFO  [scheduled-job-executor-3] Running check for scheduled jobs
+Timestamp ERROR or  INFO - [thread] Message
